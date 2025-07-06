@@ -29,11 +29,9 @@ export const BookSchema = z.object({
         message: "Publication year must be an integer",
     }),
 
-    ISBN: z.number({
+    ISBN: z.string({
         required_error: "ISBN is required",
-        invalid_type_error: "ISBN must be a number",
-    }).int({
-        message: "ISBN must be an integer",
+        invalid_type_error: "ISBN must be a string",
     }),
 
     price: z.number({

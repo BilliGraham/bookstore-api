@@ -1,36 +1,39 @@
-import { Book } from '../models/book.model';
+import { Op } from 'sequelize';
+import Book, { BookAttributes } from '../models/book.model';
 
-let books: Book[] = [];
-
-export const addBook = (book: Book): void => {
-  books.push(book);
+export const addBook = async (bookData: BookAttributes): Promise<Book> => {
+  return await Book.create(bookData);
 };
 
-export const getBookById = (id: number): Book | undefined => {
-  return books.find(b => b.id === id);
+export const getBookById = async (id: number): Promise<Book | null> => {
+  return await Book.findByPk(id);
 };
 
-export const updateBook = (id: number, updatedData: Partial<Book>): Book | null => {
-  const book = books.find(b => b.id === id);
+export const updateBook = async (
+  id: number,
+  updatedData: Partial<BookAttributes>
+): Promise<Book | null> => {
+  const book = await Book.findByPk(id);
   if (!book) return null;
 
-  Object.assign(book, updatedData);
-  return book;
+  return await book.update(updatedData);
 };
 
-export const deleteBook = (id: number): boolean => {
-  const index = books.findIndex(b => b.id === id);
-  if (index === -1) return false;
-
-  books.splice(index, 1);
-  return true;
+export const deleteBook = async (id: number): Promise<boolean> => {
+  const deletedCount = await Book.destroy({ where: { id } });
+  return deletedCount > 0;
 };
 
-export const getAllBooks = (): Book[] => books;
+export const getAllBooks = async (): Promise<Book[]> => {
+  return await Book.findAll();
+};
 
-export const getBooksByGenre = (genre: string): Book[] => {
-  const allBooks = getAllBooks();
-  return allBooks.filter(book => 
-    book.genre.toLowerCase() === genre.toLowerCase()
-  );
+export const getBooksByGenre = async (genre: string): Promise<Book[]> => {
+  return await Book.findAll({
+    where: {
+      genre: {
+        [Op.iLike]: genre, // Case-insensitive search
+      },
+    },
+  });
 };
