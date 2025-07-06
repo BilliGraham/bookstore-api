@@ -27,3 +27,10 @@ export const deleteBook = (id: number): boolean => {
 };
 
 export const getAllBooks = (): Book[] => books;
+
+export const getBooksByGenre = (genre: string): Book[] => {
+  const allBooks = getAllBooks();
+  return allBooks.filter(book => 
+    book.genre.toLowerCase() === genre.toLowerCase()
+  );
+};
