@@ -1,8 +1,8 @@
 import { BookInput } from './book.schema';
 import * as bookService from '../services/book.service';
 
-export const checkForDuplicateBook = async (bookData: BookInput): Promise<string | null> => {
-  const allBooks = await bookService.getAllBooks();
+export const checkForDuplicateBook = (bookData: BookInput): string | null => {
+  const allBooks = bookService.getAllBooks();
   
   const duplicate = allBooks.find(book => 
     book.title.toLowerCase() === bookData.title.toLowerCase() &&
