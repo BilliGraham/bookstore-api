@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/books', bookController.createBook);
-router.get('/books/:discounted-price', bookController.listBooksWithDiscountedPrice);
 router.get('/books/:id', bookController.getBook);
 router.put('/books/:id', bookController.updateBook);
 router.delete('/books/:id', bookController.deleteBook);
