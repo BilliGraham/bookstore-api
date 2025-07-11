@@ -43,7 +43,7 @@ npm install zod@^3.22.4
 ### Start the server
 
 ```bash
-npm start
+npm run dev
 ```
 
 The API will listen on `http://localhost:3000` by default.
