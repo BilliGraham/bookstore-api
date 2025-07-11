@@ -5,6 +5,6 @@ export interface Book {
   genre: string;
   price: number;
   publicationYear: number;
-  ISBN: number;
+  ISBN: string;
   description?: string;
 }

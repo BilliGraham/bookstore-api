@@ -1,5 +1,19 @@
 import { z } from 'zod';
 
+/**
+ * Schema definition for a Book object using Zod.
+ *
+ * Fields:
+ * - `title`: The title of the book. Must be a string with at least 3 characters.
+ * - `author`: The author of the book. Must be a string with at least 3 characters.
+ * - `genre`: The genre of the book. Must be a string with at least 3 characters.
+ * - `publicationYear`: The year the book was published. Must be an integer number.
+ * - `ISBN`: The International Standard Book Number. Must be a string with at least 5 characters.
+ * - `price`: The price of the book. Must be a non-negative number with no more than 2 decimal places.
+ * - `description`: An optional description of the book.
+ *
+ * Each field includes validation and custom error messages for required fields and type constraints.
+ */
 export const BookSchema = z.object({
     title: z.string({
         required_error: "Title is required",
@@ -29,11 +43,11 @@ export const BookSchema = z.object({
         message: "Publication year must be an integer",
     }),
 
-    ISBN: z.number({
+    ISBN: z.string({
         required_error: "ISBN is required",
-        invalid_type_error: "ISBN must be a number",
-    }).int({
-        message: "ISBN must be an integer",
+        invalid_type_error: "ISBN must be a string",
+    }).min(5, {
+        message: "ISBN length must be at least 5 characters",
     }),
 
     price: z.number({
